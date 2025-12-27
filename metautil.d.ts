@@ -276,6 +276,104 @@ export function collect(
   options?: CollectorOptions,
 ): Collector;
 
+// Submodule: list
+
+export class List<T> {
+  readonly size: number;
+  constructor(size?: number);
+
+  // Static factory methods
+  static fromArray<T>(values: Array<T>): List<T>;
+  static fromIterator<T>(iterator: Iterable<T>): List<T>;
+  static range(start: number, end: number, step?: number): List<number>;
+  static merge<T>(lists: Array<List<T>>): List<T>;
+
+  // Core
+  [Symbol.iterator](): Iterator<T>;
+  [Symbol.asyncIterator](): AsyncIterator<T>;
+  toArray(): Array<T>;
+  clone(): List<T>;
+  clear(): void;
+
+  // Element access
+  at(index: number): T | undefined;
+  set(index: number, value: T): void;
+  first(): T | undefined;
+  last(): T | undefined;
+
+  // Add/remove
+  append(value: T): void;
+  prepend(value: T): void;
+  insert(index: number, value: T, count?: number): void;
+  delete(index: number, count?: number): void;
+
+  // Queue/Stack
+  enqueue(value: T): void;
+  dequeue(): T | undefined;
+
+  // Slicing
+  slice(start?: number, end?: number): List<T>;
+  head(): List<T>;
+  tail(): List<T>;
+  take(n: number): List<T>;
+  drop(n: number): void;
+  splitAt(index: number): { before: List<T>; after: List<T> };
+
+  // Search
+  includes(value: T): boolean;
+  indexOf(value: T): number;
+  lastIndexOf(value: T): number;
+  find(fn: (value: T, index: number) => boolean): T | undefined;
+  findIndex(fn: (value: T, index: number) => boolean): number;
+  equals(other: List<T>): boolean;
+
+  // Bulk modifications
+  addAll(values: Iterable<T>): void;
+  removeAll(values: Iterable<T>): void;
+  fill(value: T, start?: number, end?: number): void;
+  replace(oldValue: T, newValue: T): void;
+
+  // Reordering
+  swap(i: number, j: number): void;
+  move(from: number, to: number): void;
+  rotate(n: number): void;
+  rotateLeft(steps?: number): void;
+  rotateRight(steps?: number): void;
+  reverse(): void;
+  toReversed(): List<T>;
+
+  // Sorting & shuffling
+  sort(compare?: (a: T, b: T) => number): void;
+  toSorted(compare?: (a: T, b: T) => number): List<T>;
+  shuffle(random?: () => number): void;
+  toShuffled(random?: () => number): List<T>;
+
+  // Deduplication
+  distinct(): void;
+  toDistinct(): List<T>;
+
+  // Functional
+  map<U>(fn: (value: T, index: number) => U): List<U>;
+  flatMap<U>(fn: (value: T) => List<U> | Array<U>): List<U>;
+  filter(fn: (value: T, index: number) => boolean): List<T>;
+  reduce<U>(fn: (acc: U, value: T, index: number) => U, initial: U): U;
+  some(fn: (value: T, index: number) => boolean): boolean;
+  every(fn: (value: T, index: number) => boolean): boolean;
+  sum(fn?: (value: T) => number): number;
+  avg(fn?: (value: T) => number): number;
+  min(compare?: (a: T, b: T) => number): T | undefined;
+  max(compare?: (a: T, b: T) => number): T | undefined;
+  groupBy<K>(key: (value: T) => K): Map<K, List<T>>;
+
+  // Lazy iterators
+  lazyMap<U>(fn: (value: T, index: number) => U): Generator<U>;
+  lazyFilter(fn: (value: T, index: number) => boolean): Generator<T>;
+  lazyReduce<U>(fn: (acc: U, value: T, index: number) => U, initial: U): Generator<U>;
+
+  // String output
+  join(separator?: string): string;
+}
+
 // Submodule: Events
 
 type Listener = (data: unknown) => void;
