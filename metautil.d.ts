@@ -368,7 +368,10 @@ export class List<T> {
   // Lazy iterators
   lazyMap<U>(fn: (value: T, index: number) => U): Generator<U>;
   lazyFilter(fn: (value: T, index: number) => boolean): Generator<T>;
-  lazyReduce<U>(fn: (acc: U, value: T, index: number) => U, initial: U): Generator<U>;
+  lazyReduce<U>(
+    fn: (acc: U, value: T, index: number) => U,
+    initial: U,
+  ): Generator<U>;
 
   // String output
   join(separator?: string): string;
