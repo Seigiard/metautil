@@ -2,7 +2,8 @@
 
 module.exports = {
   ...require('./lib/list.js'),
-  ...require('./lib/linkedlist.js'),
+  ...require('./lib/list-linked.js'),
+  ...require('./lib/list-unrolled.js'),
   ...require('./lib/array.js'),
   ...require('./lib/async.js'),
   ...require('./lib/collector.js'),
